@@ -60,8 +60,8 @@ my $transport = Email::Sender::Transport::SMTP::TLS->new({
 
 # --- Send the email ---
 eval {
-	sendmail($email, { to => 'nigel_horne@hotmail.com', transport => $transport });	# Because BCC doesn't work
 	sendmail($email, { transport => $transport });
+	sendmail($email, { to => 'nigel_horne@hotmail.com', transport => $transport });	# Because BCC doesn't work
 	print "Email sent successfully.\n";
 };
 if ($@) {
