@@ -54,13 +54,12 @@ my $email = Email::Simple->create(
 
 # --- Set up the SMTP transport ---
 my $transport = Email::Sender::Transport::SMTP::TLS->new({
-	host	 => 'smtp.gmail.com',
-	port	 => 587,
+	host => 'smtp.gmail.com',
+	port => 587,
 	username => $username,
 	password => $password,
-	timeout=> 60,
+	timeout => 60,
 });
-
 
 # --- Send the email ---
 eval {
