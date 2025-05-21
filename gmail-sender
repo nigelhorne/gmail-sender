@@ -1,0 +1,69 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use autodie qw(:all);
+use Config::Abstraction;
+use Email::Sender::Simple qw(sendmail);
+use Email::Sender::Transport::SMTP::TLS;
+use Email::Simple;
+use Email::Simple::Creator;
+use Getopt::Long;
+
+# --- Command-line options ---
+my ($from, $to, $subject, $username, $password, $file);
+
+GetOptions(
+	'from=s' => \$from,
+	'to=s' => \$to,
+	'subject=s'=> \$subject,
+	'username=s' => \$username,
+	'password=s' => \$password,	# An app password, not your gmail password
+	'file=s' => \$file,
+) or die 'Invalid options';
+
+# Read username and password from the command line
+if(my $config = Config::Abstraction->new()) {
+	$username ||= $config->username();
+	$password ||= $config->password();
+}
+
+# --- Validation ---
+die 'Missing required parameters' unless $from && $to && $subject && $username && $password && $file;
+
+# --- Read email body from file ---
+open my $fh, '<', $file or die "Cannot open $file: $!";
+my $body = do { local $/; <$fh> };
+close $fh;
+
+# --- Create the email ---
+my $email = Email::Simple->create(
+	header => [
+		To => $to,
+		From => $from,
+		Subject => $subject,
+		# Bcc => 'nigel_horne@hotmail.com',	# I don't think this works
+	],
+	body => $body,
+);
+
+# --- Set up the SMTP transport ---
+my $transport = Email::Sender::Transport::SMTP::TLS->new({
+	host	 => 'smtp.gmail.com',
+	port	 => 587,
+	username => $username,
+	password => $password,
+	timeout=> 60,
+});
+
+
+# --- Send the email ---
+eval {
+	sendmail($email, { to => 'nigel_horne@hotmail.com', transport => $transport });	# Because BCC doesn't work
+	sendmail($email, { transport => $transport });
+	print "Email sent successfully.\n";
+};
+if ($@) {
+	die "Failed to send email: $@";
+}
