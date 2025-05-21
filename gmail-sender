@@ -44,9 +44,13 @@ my $email = Email::Simple->create(
 		From => $from,
 		Subject => $subject,
 		# Bcc => 'nigel_horne@hotmail.com',	# I don't think this works
+		'Reply-To' => $from,
+		'Sender' => $from,
 	],
 	body => $body,
 );
+
+# die $email->as_string();
 
 # --- Set up the SMTP transport ---
 my $transport = Email::Sender::Transport::SMTP::TLS->new({
