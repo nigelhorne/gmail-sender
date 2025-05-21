@@ -1,11 +1,11 @@
-# Gmail Sender Perl Script
+# Gmail Sender Script
 
-This Perl script sends an email using Gmail’s SMTP server (`smtp.gmail.com`).  
+This script sends an email using Gmail’s SMTP server (`smtp.gmail.com`).  
 It reads the email body from a file and supports authentication either via command-line arguments or a configuration file in your home directory.
 
 ## Requirements
 
-Install the required Perl modules using CPAN:
+Install the required modules using CPAN:
 
 ```sh
 cpan Email::Sender::Simple \
@@ -21,7 +21,7 @@ cpan Email::Sender::Simple \
 perl send_gmail \
   --from     'your.name@gmail.com' \
   --to       'recipient@example.com' \
-  --subject  'Hello from Perl' \
+  --subject  'Hello World' \
   --file     message.txt \
   --username 'your.name@gmail.com' \
   --password 'your-app-password'
