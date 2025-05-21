@@ -40,8 +40,8 @@ $HOME/.conf/gmail-sender
 And add the following content:
 
 ```
-username=your.name@gmail.com
-password=your-app-password
+username: your.name@gmail.com
+password: "your app password"
 ```
 
 > **Important**: Use a Gmail **App Password** instead of your real Gmail password.
