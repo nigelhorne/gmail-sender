@@ -44,7 +44,7 @@ username=your.name@gmail.com
 password=your-app-password
 ```
 
-> ⚠️**Important**: Use a Gmail **App Password** instead of your real Gmail password.
+> **Important**: Use a Gmail **App Password** instead of your real Gmail password.
 > You can create one by visiting your [Google Account settings](https://myaccount.google.com/)
 > and navigating to **Security → App passwords**.
 
